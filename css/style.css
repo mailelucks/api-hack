@@ -1,0 +1,94 @@
+/* CSS reset 
+	(all the browsers will see the website in the same by setting every tag to 0 (the website will look the same on all browsers))
+*/
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+/* General styles 
+	(the styles used everywhere in the page (like the Body) or styles which are used in more than 2 of the modules bellow (h2, h3, h4, h5, h6, p, a, ul, li))
+*/
+
+body {
+    margin: 0 auto;
+    background-image: url(../cookies.jpeg);
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-color: saddlebrown;
+    font-family: 'Lobster', cursive;
+}
+p {
+    font-size: 15px;
+}
+.hidden {
+    display: none;
+}
+
+/* Header styles 
+	(all the styles inside the < header > or < nav > tags) 
+*/
+
+
+/* Content styles 
+	(all the styles inside the < sections > or < aside > tags)
+*/
+/*Query Box*/
+.titles {
+    width: 100%;
+    margin-top: .1em;
+    margin-bottom:3em;
+}
+.queryBox h1 {
+    font-size:4em;
+    color: lightblue;
+}
+.queryBox h1.header-subtitle {
+    font-size:2.5em;
+    color: orange;
+}
+/*Location Form*/
+form.locationForm {
+    font-size: 1.1em;
+}
+form.locationForm  input[type="text"] {
+    font-family: 'Helvetica', sans-serif;
+    padding: .5em;
+}
+form.locationForm  input[type="submit"] {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    padding: .5em;
+    margin-top: 1em;
+    border-radius: .3em;
+    font-family: 'Lobster', cursive;
+}
+
+/*Footer*/
+footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1em;
+    text-align: center;
+    color: white;
+}
+/* Responsive styles 
+	(the very last module in the CSS, contains all the media queries and it is dealing with the compatibility with mobiles and tablets)
+*/

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SnackBox</title>
+    <meta name="description" content="Munchie Locator">
+    <meta name="author" content="Maile Lucks">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro|Lobster' rel='stylesheet' type='text/css'>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+</head>
+
+
+<body>
+    <header>
+    
+    </header>
+
+    <section class="queryBox">
+       <div class="titles">
+           <h1>SnackBox</h1>
+           <h1 class="header-subtitle">Search For Munchies</h1>
+       </div>
+
+        <form class="locationForm">
+				<input type="text" placeholder='Location?' name="location" size="30" autofocus required>
+				<input type="submit" value="Find Munchies">
+        </form>
+
+        <div class="results-container">
+			<div class="search-results"></div>
+			<div class="results"></div>
+		</div>
+    </section>
+
+    <section class="templates hidden">
+        <dl>
+            <dt class="snackName"></dt>
+                <dd class="snack-text"><a href="" target="_blank"></a></dd>
+            <dt class="snackRating"></dt>
+                <dd class="snack-rating"></dd>
+            <dt class="snackDistance"></dt>
+                <dd class="food-distance"></dd>
+        </dl>
+    </section>
+
+
+    <footer>
+        Copyright Foursquare API
+    </footer>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="js/scripts.js" type="text/javascript">
+    </script>
+</body>
+
+</html>
