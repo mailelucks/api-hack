@@ -4,32 +4,72 @@ var debug = function(msg) {
         console.log("DEBUG:", msg);
     }
 }
+var showSnacks = function(question) {
 
-var params = {
-                
-            };
+	// clone our result template code
+	var result = $('.templates .question').clone();
+	
+	// Set the question properties in result
+	var questionElem = result.find('.question-text a');
+	questionElem.attr('href', question.link);
+	questionElem.text(question.title);
 
-            var result = $.ajax({
-                /* update API end point */
-                url: "https://api.foursquare.com/v2/venues/explore",
-                data: params,
-                dataType: "jsonp",
-                /*set the call type GET / POST*/
-                type: "GET",
-            })
+	// set the date asked property in result
+	var asked = result.find('.asked-date');
+	var date = new Date(1000*question.creation_date);
+	asked.text(date.toString());
 
-            /* if the call is successful (status 200 OK) show results */
-            .done(function (result) {
-                /* if the results are meeningful, we can just console.log them */
-                console.log(result);
-            })
+	// set the .viewed for question property in result
+	var viewed = result.find('.viewed');
+	viewed.text(question.view_count);
 
-            /* if the call is NOT successful show errors */
-            .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-            });
+	// set some properties related to asker
+	var asker = result.find('.asker');
+	asker.html('<p>Name: <a target="_blank" '+
+		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
+		question.owner.display_name +
+		'</a></p>' +
+		'<p>Reputation: ' + question.owner.reputation + '</p>'
+	);
+
+	return result;
+    
+};
+
+var getSnacks = function(locale) {
+	
+	// the parameters we need to pass in our request to StackOverflow's API
+	var request = { 
+		near: 'locale',
+        section: 'food',
+		venuePhoto: 1,
+        sortByDistance: 1,
+        group: 'recommended'
+	};
+	
+	$.ajax({
+		url: "https://api.foursquare.com/v2/venues/explore",
+		data: request,
+		dataType: "jsonp",//use jsonp to avoid cross origin issues
+		type: "GET",
+	})
+    
+	.done(function(result){ 
+        console.log(result);
+//		$('.search-results').html(searchResults);
+//		//$.each is a higher order function. It takes an array and a function as an argument.
+//		//The function is executed once for each item in the array.
+//		$.each(result.items, function(i, item) {
+//			var snacks = showSnacks(item);
+//			$('.nearbySnacks').append(snacks);
+//		});
+	})
+	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
+	});
+    
+};
 
 $(document).ready(function() {
 $('.locationForm').submit( function(e){

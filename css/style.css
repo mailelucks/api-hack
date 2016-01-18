@@ -47,17 +47,16 @@ p {
 /* Content styles 
 	(all the styles inside the < sections > or < aside > tags)
 */
-/*Query Box*/
-.titles {
+/*Header*/
+header {
     width: 100%;
-    margin-top: .1em;
-    margin-bottom:3em;
+    padding: 1em 0 3em;
 }
-.queryBox h1 {
-    font-size:4em;
+header h1 {
+    font-size:3em;
     color: lightblue;
 }
-.queryBox h1.header-subtitle {
+header h1.header-subtitle {
     font-size:2.5em;
     color: orange;
 }
@@ -65,20 +64,10 @@ p {
 form.locationForm {
     font-size: 1.1em;
 }
-form.locationForm  input[type="text"] {
-    font-family: 'Helvetica', sans-serif;
-    padding: .5em;
+select#displayCarMakes {
+    width: 14em;
+    font-size: 1em;
 }
-form.locationForm  input[type="submit"] {
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    padding: .5em;
-    margin-top: 1em;
-    border-radius: .3em;
-    font-family: 'Lobster', cursive;
-}
-
 /*Footer*/
 footer {
     position: absolute;
@@ -87,6 +76,7 @@ footer {
     left: 0;
     padding: 1em;
     text-align: center;
+    font-size:  2em;
     color: white;
 }
 /* Responsive styles 

@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SnackBox</title>
-    <meta name="description" content="Munchie Locator">
+    <title>BoxOnWheels</title>
+    <meta name="description" content="Find a New Whip">
     <meta name="author" content="Maile Lucks">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro|Lobster' rel='stylesheet' type='text/css'>
@@ -16,40 +16,26 @@
 
 <body>
     <header>
-    
+         <h1>BoxOnWheels</h1>
+            <h1 class="header-subtitle">Select from the List</h1>
     </header>
 
     <section class="queryBox">
-       <div class="titles">
-           <h1>SnackBox</h1>
-           <h1 class="header-subtitle">Search For Munchies</h1>
-       </div>
 
-        <form class="locationForm">
-				<input type="text" placeholder='Location?' name="location" size="30" autofocus required>
-				<input type="submit" value="Find Munchies">
-        </form>
-
-        <div class="results-container">
-			<div class="search-results"></div>
-			<div class="results"></div>
-		</div>
+         <select id="displayCarMakes">
+        </select>
+        <button class="search-button" id="searchCars">Search</button>
     </section>
 
-    <section class="templates hidden">
-        <dl>
-            <dt class="snackName"></dt>
-                <dd class="snack-text"><a href="" target="_blank"></a></dd>
-            <dt class="snackRating"></dt>
-                <dd class="snack-rating"></dd>
-            <dt class="snackDistance"></dt>
-                <dd class="food-distance"></dd>
-        </dl>
+    <section class="results">
+         <ul id="modelResults">
+
+        </ul>
     </section>
 
 
     <footer>
-        Copyright Foursquare API
+        Not for Commercial Purposes
     </footer>
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script src="js/scripts.js" type="text/javascript">
