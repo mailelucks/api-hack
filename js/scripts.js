@@ -47,12 +47,11 @@
          /* if the call is successful (status 200 OK) show results */
          .done(function (result) {
              /* if the results are meeningful, we can just console.log them */
-             console.log(result.models);
              $('#modelResults').empty();
              $.each(result.models, function (i, item) {
                  //var carModels = '<li class = "modelRow">' + searchTerm + ' ' + item.name;
                  //youtube search
-
+                 
                  $.getJSON("https://www.googleapis.com/youtube/v3/search", {
                          "part": "snippet",
                          "key": "AIzaSyCclIq-RF7zhCJ_JnoXJBLdGvz-v2nzCB0",
