@@ -25,7 +25,7 @@
              console.log(error);
              console.log(errorThrown);
          });
-     console.log(result);
+//     console.log(result);
  }
 
 
@@ -65,15 +65,15 @@
 
                          $.each(data.items, function (index, video) {
                              // append li to ul
-                             console.log(data.items[0].snippet.thumbnails.medium.url);
+//                             console.log(data.items[0].snippet.thumbnails.medium.url);
                              var videoURL = video.snippet.thumbnails.medium.url;
 
 
                          });
-                         console.log(data.items[0].snippet.thumbnails.medium.url);
+//                         console.log(data.items[0].snippet.thumbnails.medium.url);
 
-
-                         var carModels = '<li class = "modelRow"><img class = "car-image" src="' + data.items[0].snippet.thumbnails.medium.url + '"/> <p class="caption">' + searchTerm + ' ' + item.name + '</p> </li>';
+                        console.log(carRating(searchTerm.toLowerCase(), item.name.toLowerCase(), 1990));
+                         var carModels = '<li class = "modelRow"><img class = "car-image" src="' + data.items[0].snippet.thumbnails.medium.url + '"/> <p class="caption">' + searchTerm + ' ' + item.name + '</p><p>' + carRating(searchTerm.toLowerCase(), item.name.toLowerCase(), 1990) +  '</p> </li>';
                          $('#modelResults').append(carModels);
                          //carModels += '<img src="' + data.items[0].snippet.thumbnails.medium.url + '"/> <br />';
 
@@ -96,6 +96,34 @@
              console.log(errorThrown);
          });
  }
+
+function carRating(make, model, year) {
+    
+    var result = $.ajax({
+             /* update API end point */
+                  
+             url: "https://api.edmunds.com/api/vehiclereviews/v2/" + make + "/" + model + "/" + year + "?fmt=json&api_key=cn2fjcqsvzhaf9xzdhztf6gx",
+             dataType: "jsonp",
+             /*set the call type GET / POST*/
+             type: "GET",
+         })
+     .done(function (result) {
+//         console.log(result.averageRating);
+         return result.averageRating;
+             /* if the results are meeningful, we can just console.log them */
+//             $.each(result.makes, function (i, item) {
+//                 var carMakes = '<option value="' + item.name + '">' + item.name + '</option>';
+//                 $('#displayCarMakes').append(carMakes);
+//             });
+
+         })
+         /* if the call is NOT successful show errors */
+         .fail(function (jqXHR, error, errorThrown) {
+             console.log(jqXHR);
+             console.log(error);
+             console.log(errorThrown);
+         });
+}
 
  $(document).ready(function () {
      populateDropDown();
