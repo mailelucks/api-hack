@@ -1,84 +1,105 @@
-var DEBUG_MODE = true;
-var debug = function(msg) {
-    if (DEBUG_MODE == true) {
-        console.log("DEBUG:", msg);
-    }
-}
-var showSnacks = function(question) {
+ function populateDropDown() {
+     /*
+     We would like to see if we can get an valid JSON result which we can parse in using AJAX
+     */
+     /* Update all the parameters for your API test*/
+     var result = $.ajax({
+             /* update API end point */
+             url: "https://api.edmunds.com/api/vehicle/v2/makes?fmt=json&api_key=cn2fjcqsvzhaf9xzdhztf6gx",
+             dataType: "jsonp",
+             /*set the call type GET / POST*/
+             type: "GET",
+         })
+         /* if the call is successful (status 200 OK) show results */
+         .done(function (result) {
+             /* if the results are meeningful, we can just console.log them */
+             $.each(result.makes, function (i, item) {
+                 var carMakes = '<option value="' + item.name + '">' + item.name + '</option>';
+                 $('#displayCarMakes').append(carMakes);
+             });
 
-	// clone our result template code
-	var result = $('.templates .question').clone();
-	
-	// Set the question properties in result
-	var questionElem = result.find('.question-text a');
-	questionElem.attr('href', question.link);
-	questionElem.text(question.title);
+         })
+         /* if the call is NOT successful show errors */
+         .fail(function (jqXHR, error, errorThrown) {
+             console.log(jqXHR);
+             console.log(error);
+             console.log(errorThrown);
+         });
+     console.log(result);
+ }
 
-	// set the date asked property in result
-	var asked = result.find('.asked-date');
-	var date = new Date(1000*question.creation_date);
-	asked.text(date.toString());
 
-	// set the .viewed for question property in result
-	var viewed = result.find('.viewed');
-	viewed.text(question.view_count);
+ function searchResults() {
+     var e = document.getElementById("displayCarMakes");
+     var searchTerm = e.options[e.selectedIndex].value;
+     /*
+     We would like to see if we can get an valid JSON result which we can parse in using AJAX
+     */
+     /* Update all the parameters for your API test*/
+     var result = $.ajax({
+             /* update API end point */
 
-	// set some properties related to asker
-	var asker = result.find('.asker');
-	asker.html('<p>Name: <a target="_blank" '+
-		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
-		question.owner.display_name +
-		'</a></p>' +
-		'<p>Reputation: ' + question.owner.reputation + '</p>'
-	);
+             url: " https://api.edmunds.com/api/vehicle/v2/" + searchTerm + "/models?fmt=json&api_key=cn2fjcqsvzhaf9xzdhztf6gx",
+             dataType: "jsonp",
+             /*set the call type GET / POST*/
+             type: "GET",
+         })
+         /* if the call is successful (status 200 OK) show results */
+         .done(function (result) {
+             /* if the results are meeningful, we can just console.log them */
+             console.log(result.models);
+             $('#modelResults').empty();
+             $.each(result.models, function (i, item) {
+                 //var carModels = '<li class = "modelRow">' + searchTerm + ' ' + item.name;
+                 //youtube search
 
-	return result;
-    
-};
+                 $.getJSON("https://www.googleapis.com/youtube/v3/search", {
+                         "part": "snippet",
+                         "key": "AIzaSyCclIq-RF7zhCJ_JnoXJBLdGvz-v2nzCB0",
+                         "q": searchTerm + ' ' + item.name
+                     },
+                     function (data) {
+                         if (data.pageInfo.totalResults == 0) {
+                             alert("No videos found!");
+                         }
+                         // If there are no results it will just empty the list
 
-var getSnacks = function(locale) {
-	
-	// the parameters we need to pass in our request to StackOverflow's API
-	var request = { 
-		near: 'locale',
-        section: 'food',
-		venuePhoto: 1,
-        sortByDistance: 1,
-        group: 'recommended'
-	};
-	
-	$.ajax({
-		url: "https://api.foursquare.com/v2/venues/explore",
-		data: request,
-		dataType: "jsonp",//use jsonp to avoid cross origin issues
-		type: "GET",
-	})
-    
-	.done(function(result){ 
-        console.log(result);
-//		$('.search-results').html(searchResults);
-//		//$.each is a higher order function. It takes an array and a function as an argument.
-//		//The function is executed once for each item in the array.
-//		$.each(result.items, function(i, item) {
-//			var snacks = showSnacks(item);
-//			$('.nearbySnacks').append(snacks);
-//		});
-	})
-	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
-		var errorElem = showError(error);
-		$('.search-results').append(errorElem);
-	});
-    
-};
+                         $.each(data.items, function (index, video) {
+                             // append li to ul
+                             console.log(data.items[0].snippet.thumbnails.medium.url);
+                             var videoURL = video.snippet.thumbnails.medium.url;
 
-$(document).ready(function() {
-$('.locationForm').submit( function(e){
-		e.preventDefault();
-		// zero out results if previous search has run
-		$('.results').html('');
-		// get the value of the tags the user submitted
-		var locale = $(this).find("input[name='location']").val();
-		getSnacks(locale);
-	});
 
-});
+                         });
+                         console.log(data.items[0].snippet.thumbnails.medium.url);
+
+
+                         var carModels = '<li class = "modelRow"><img class = "car-image" src="' + data.items[0].snippet.thumbnails.medium.url + '"/> <p class="caption">' + searchTerm + ' ' + item.name + '</p> </li>';
+                         $('#modelResults').append(carModels);
+                         //carModels += '<img src="' + data.items[0].snippet.thumbnails.medium.url + '"/> <br />';
+
+                     }
+
+                 );
+
+
+                 //carModels += ' </li>';
+
+
+
+             });
+
+         })
+         /* if the call is NOT successful show errors */
+         .fail(function (jqXHR, error, errorThrown) {
+             console.log(jqXHR);
+             console.log(error);
+             console.log(errorThrown);
+         });
+ }
+
+ $(document).ready(function () {
+     populateDropDown();
+     $('#searchCars').on('click', searchResults);
+ });
+
